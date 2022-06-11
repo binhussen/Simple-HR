@@ -1,0 +1,5 @@
+C:\Users\mhdbi\Documents\Projects\Test\Simple-Hr\API\Contracts\obj\Debug\net6.0\Contracts.csproj.AssemblyReference.cache
+C:\Users\mhdbi\Documents\Projects\Test\Simple-Hr\API\Contracts\obj\Debug\net6.0\Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mhdbi\Documents\Projects\Test\Simple-Hr\API\Contracts\obj\Debug\net6.0\Contracts.AssemblyInfoInputs.cache
+C:\Users\mhdbi\Documents\Projects\Test\Simple-Hr\API\Contracts\obj\Debug\net6.0\Contracts.AssemblyInfo.cs
+C:\Users\mhdbi\Documents\Projects\Test\Simple-Hr\API\Contracts\obj\Debug\net6.0\Contracts.csproj.CoreCompileInputs.cache
