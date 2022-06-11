@@ -10,7 +10,7 @@ namespace Contracts.Interfaces
     public interface ITaxLookUp
     {
         Task<IEnumerable<TaxLookUp>> GetAllTaxLookUpsAsync(bool trackChanges);
-        Task<TaxLookUp> GetTaxLookUpAsync(Guid taxLookUpId, bool trackChanges);
+        Task<TaxLookUp> GetTaxLookUpAsync(int taxLookUpId, bool trackChanges);
         void CreateTaxLookUp(TaxLookUp taxLookUp);
         void DeleteTaxLookUp(TaxLookUp taxLookUp);
     }

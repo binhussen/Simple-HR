@@ -11,28 +11,22 @@ namespace DataModel.Models.Entities
     public class Employee : BaseEntity
     {
         [Column("EmployeeId")]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gander { get; set; }
         public DateTimeOffset BirthDate { get; set; }
         public DateTimeOffset HireDate { get; set; }
         public Boolean Status { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
 
-        [ForeignKey(nameof(Address))]
-        public Guid AddressId { get; set; }
-        public Address Address { get; set; }
-
-        [ForeignKey(nameof(Salary))]
-        public Guid SalaryId { get; set; }
-        public Salary Salary { get; set; }
+        public int SalaryId { get; set; }
+        [ForeignKey("SalaryId")]
+        public virtual Salary Salary { get; set; }
 
         [ForeignKey(nameof(Department))]
-        public Guid DepartmentId { get; set; }
-        public Department Department { get; set; }
-
-        [ForeignKey(nameof(Company))]
-        public Guid CompanyId { get; set; }
-        public Company Company { get; set; }
+        public int DepartmentId { get; set; }
+        public virtual Department Department { get; set; }
     }
 }

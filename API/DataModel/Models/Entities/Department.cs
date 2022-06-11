@@ -11,11 +11,12 @@ namespace DataModel.Models.Entities
     public class Department : BaseEntity
     {
         [Column("DepartmentId")]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+
         [ForeignKey(nameof(Company))]
-        public Guid CompanyId { get; set; }
-        public Company Company { get; set; }
+        public int CompanyId { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

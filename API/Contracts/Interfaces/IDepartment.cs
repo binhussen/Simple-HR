@@ -10,7 +10,7 @@ namespace Contracts.Interfaces
     public interface IDepartment
     {
         Task<IEnumerable<Department>> GetAllDepartmentsAsync(bool trackChanges);
-        Task<Department> GetDepartmentAsync(Guid departmentId, bool trackChanges);
+        Task<Department> GetDepartmentAsync(int departmentId, bool trackChanges);
         void CreateDepartment(Department department);
         void DeleteDepartment(Department department);
     }

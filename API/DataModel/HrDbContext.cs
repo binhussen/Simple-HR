@@ -5,6 +5,10 @@ namespace DataModel
 {
     public class HrDbContext : DbContext
     {
+        public HrDbContext()
+        {
+
+        }
 
         public HrDbContext(DbContextOptions<HrDbContext> options) : base(options)
         {

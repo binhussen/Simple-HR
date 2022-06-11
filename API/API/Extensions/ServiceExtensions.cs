@@ -1,4 +1,6 @@
-﻿using DataModel;
+﻿using Contracts.Interfaces;
+using DataModel;
+using Infrastracture.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
@@ -17,5 +19,7 @@ namespace API.Extensions
             services.AddDbContext<HrDbContext>(opts =>
                 opts.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
                     b => b.MigrationsAssembly("DataModel")));
+        public static void ConfigureRepositoryManager(this IServiceCollection services) =>
+          services.AddScoped<IRepositoryManager, RepositoryManager>();
     }
 }

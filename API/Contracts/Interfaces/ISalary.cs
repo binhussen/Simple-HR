@@ -10,7 +10,7 @@ namespace Contracts.Interfaces
     public interface ISalary
     {
         Task<IEnumerable<Salary>> GetAllSalarysAsync(bool trackChanges);
-        Task<Salary> GetSalaryAsync(Guid salaryId, bool trackChanges);
+        Task<Salary> GetSalaryAsync(int salaryId, bool trackChanges);
         void CreateSalary(Salary salary);
         void DeleteSalary(Salary salary);
     }

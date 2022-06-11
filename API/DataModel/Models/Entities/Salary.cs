@@ -11,7 +11,7 @@ namespace DataModel.Models.Entities
     public class Salary : BaseEntity
     {
         [Column("SalaryId")]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Grade { get; set; }
         public string Position { get; set; }
         public double Growth { get; set; }

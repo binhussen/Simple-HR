@@ -10,7 +10,7 @@ namespace Contracts.Interfaces
     public interface IEmployee
     {
         Task<IEnumerable<Employee>> GetAllEmployeesAsync(bool trackChanges);
-        Task<Employee> GetEmployeeAsync(Guid employeeId, bool trackChanges);
+        Task<Employee> GetEmployeeAsync(int employeeId, bool trackChanges);
         void CreateEmployee(Employee employee);
         void DeleteEmployee(Employee employee);
     }
