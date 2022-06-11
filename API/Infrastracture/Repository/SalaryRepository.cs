@@ -31,14 +31,9 @@ namespace Infrastracture.Repository
              .SingleOrDefaultAsync();
 
 
-        public async Task<IEnumerable<Salary>> GetAllSalaryesAsync(bool trackChanges) =>
+        public async Task<IEnumerable<Salary>> GetAllSalariesAsync(bool trackChanges) =>
            await FindAll(trackChanges)
            .OrderBy(c => c.Net)
            .ToListAsync();
-
-        public Task<IEnumerable<Salary>> GetAllSalarysAsync(bool trackChanges)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

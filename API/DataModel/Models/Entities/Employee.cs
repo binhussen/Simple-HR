@@ -21,12 +21,10 @@ namespace DataModel.Models.Entities
         public string Phone { get; set; }
         public string Email { get; set; }
 
-        public int SalaryId { get; set; }
         [ForeignKey("SalaryId")]
-        public virtual Salary Salary { get; set; }
+        public int SalaryId { get; set; }
 
         [ForeignKey(nameof(Department))]
         public int DepartmentId { get; set; }
-        public virtual Department Department { get; set; }
     }
 }

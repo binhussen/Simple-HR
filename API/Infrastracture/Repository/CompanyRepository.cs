@@ -30,15 +30,10 @@ namespace Infrastracture.Repository
          await FindByCondition(e => e.Id.Equals(id), trackChanges)
              .SingleOrDefaultAsync();
 
-        public async Task<IEnumerable<Company>> GetAllCompanyesAsync(bool trackChanges) =>
+        public async Task<IEnumerable<Company>> GetAllCompaniesAsync(bool trackChanges) =>
            await FindAll(trackChanges)
            .OrderBy(c => c.Name)
            .ToListAsync();
-
-        public Task<IEnumerable<Company>> GetAllCompaniesAsync(bool trackChanges)
-        {
-            throw new NotImplementedException();
-        }
 
     }
 }

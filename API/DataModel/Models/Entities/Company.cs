@@ -16,7 +16,6 @@ namespace DataModel.Models.Entities
         public string Type { get; set; }
         [ForeignKey(nameof(Address))]
         public int AddressId { get; set; }
-        public virtual Address Address { get; set; }
-        public ICollection<Department> Departments { get; set; }
+        public ICollection<Department>? Departments { get; set; }
     }
 }

@@ -31,14 +31,9 @@ namespace Infrastracture.Repository
              .SingleOrDefaultAsync();
 
 
-        public async Task<IEnumerable<TaxLookUp>> GetAllTaxLookUpesAsync(bool trackChanges) =>
+        public async Task<IEnumerable<TaxLookUp>> GetAllTaxLookUpsAsync(bool trackChanges) =>
            await FindAll(trackChanges)
            .OrderBy(c => c.Min)
            .ToListAsync();
-
-        public Task<IEnumerable<TaxLookUp>> GetAllTaxLookUpsAsync(bool trackChanges)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

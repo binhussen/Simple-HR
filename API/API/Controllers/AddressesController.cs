@@ -17,7 +17,6 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAddress()
         {
-
             var addresses = await _repository.Address.GetAllAddressesAsync( trackChanges: false);
             return Ok(addresses);
 

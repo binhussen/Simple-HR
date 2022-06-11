@@ -31,14 +31,9 @@ namespace Infrastracture.Repository
              .SingleOrDefaultAsync();
 
 
-        public async Task<IEnumerable<Department>> GetAllDepartmentesAsync(bool trackChanges) =>
+        public async Task<IEnumerable<Department>> GetAllDepartmentsAsync(bool trackChanges) =>
            await FindAll(trackChanges)
            .OrderBy(c => c.Name)
            .ToListAsync();
-
-        public Task<IEnumerable<Department>> GetAllDepartmentsAsync(bool trackChanges)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
