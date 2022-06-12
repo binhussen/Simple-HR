@@ -1,4 +1,6 @@
-﻿using Contracts.Interfaces;
+﻿using AutoMapper;
+using Contracts.Interfaces;
+using DataModel.Models.Dtos;
 using DataModel.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,15 +12,18 @@ namespace API.Controllers
     public class CompaniesController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
-        public CompaniesController(IRepositoryManager repository)
+        private readonly IMapper _mapper;
+        public CompaniesController(IRepositoryManager repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllCompanies()
         {
             var companies = await _repository.Company.GetAllCompaniesAsync(trackChanges: false);
-            return Ok(companies);
+            var companyDtos = _mapper.Map<IEnumerable<CompanyDto>>(companies); 
+            return Ok(companyDtos);
 
         }
 
@@ -31,11 +36,12 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            return Ok(company);
+            var companyDto = _mapper.Map<CompanyDto>(company);
+            return Ok(companyDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCompany([FromBody] Company company)
+        public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto company)
         {
             if (company == null)
             {
@@ -47,14 +53,16 @@ namespace API.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            _repository.Company.CreateCompany(company);
+            var companyEntity = _mapper.Map<Company>(company);
+            _repository.Company.CreateCompany(companyEntity);
             await _repository.SaveAsync();
-            return NoContent();
 
+            var companyToReturn = _mapper.Map<CompanyDto>(companyEntity);
+            return CreatedAtRoute(new { id = companyToReturn.Id }, companyToReturn);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCompany(int id, [FromBody] Company company)
+        public async Task<IActionResult> UpdateCompany(int id, [FromBody] CompanyForUpdateDto company)
         {
             if (company == null)
             {
@@ -71,9 +79,7 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            companyEntity.Name = company.Name;
-            companyEntity.Type = company.Type;
-            companyEntity.AddressId = company.AddressId;
+            _mapper.Map(company, companyEntity);
 
             await _repository.SaveAsync();
             return NoContent();

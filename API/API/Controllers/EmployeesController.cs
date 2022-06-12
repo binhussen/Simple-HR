@@ -1,4 +1,6 @@
-﻿using Contracts.Interfaces;
+﻿using AutoMapper;
+using Contracts.Interfaces;
+using DataModel.Models.Dtos;
 using DataModel.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,15 +13,18 @@ namespace API.Controllers
     {
 
         private readonly IRepositoryManager _repository;
-        public EmployeesController(IRepositoryManager repository)
+        private readonly IMapper _mapper;
+        public EmployeesController(IRepositoryManager repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllEmployees()
         {
             var employees = await _repository.Employee.GetAllEmployeesAsync(trackChanges: false);
-            return Ok(employees);
+            var employeeDtos = _mapper.Map<IEnumerable<EmployeeDto>>(employees); 
+            return Ok(employeeDtos);
 
         }
 
@@ -32,11 +37,12 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            return Ok(employee);
+            var employeDto = _mapper.Map<EmployeeDto>(employee);
+            return Ok(employeDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEmployee([FromBody] Employee employee)
+        public async Task<IActionResult> CreateEmployee([FromBody] EmployeeForCreationDto employee)
         {
             if (employee == null)
             {
@@ -48,14 +54,17 @@ namespace API.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            _repository.Employee.CreateEmployee(employee);
+            var employeeEntity = _mapper.Map<Employee>(employee);
+            _repository.Employee.CreateEmployee(employeeEntity);
             await _repository.SaveAsync();
-            return NoContent();
+
+            var employeeToReturn = _mapper.Map<EmployeeDto>(employeeEntity);
+            return CreatedAtRoute(new { id = employeeToReturn.Id }, employeeToReturn);
 
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployee(int id, [FromBody] Employee employee)
+        public async Task<IActionResult> UpdateEmployee(int id, [FromBody] EmployeeForUpdateDto employee)
         {
             if (employee == null)
             {
@@ -72,16 +81,7 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            employeeEntity.FirstName = employee.FirstName;
-            employeeEntity.LastName = employee.LastName;
-            employeeEntity.Gander = employee.Gander;
-            employeeEntity.BirthDate = employee.BirthDate;
-            employeeEntity.HireDate = employee.HireDate;
-            employeeEntity.Status = employee.Status;
-            employeeEntity.Phone = employee.Phone;
-            employeeEntity.Email = employee.Email;
-            employeeEntity.SalaryId = employee.SalaryId;
-            employeeEntity.DepartmentId = employee.DepartmentId;
+            _mapper.Map(employee, employeeEntity);
 
             await _repository.SaveAsync();
             return NoContent();

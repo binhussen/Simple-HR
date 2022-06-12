@@ -1,4 +1,6 @@
-﻿using Contracts.Interfaces;
+﻿using AutoMapper;
+using Contracts.Interfaces;
+using DataModel.Models.Dtos;
 using DataModel.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,15 +12,18 @@ namespace API.Controllers
     public class AddressesController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
-        public AddressesController(IRepositoryManager repository)
+        private readonly IMapper _mapper;
+        public AddressesController(IRepositoryManager repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllAddress()
         {
             var addresses = await _repository.Address.GetAllAddressesAsync( trackChanges: false);
-            return Ok(addresses);
+            var addressDtos = _mapper.Map<IEnumerable<AddressDto>>(addresses);
+            return Ok(addressDtos);
 
         }
 
@@ -30,12 +35,12 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-
-            return Ok(address);
+            var addressDto = _mapper.Map<AddressDto>(address);
+            return Ok(addressDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAddress([FromBody] Address address)
+        public async Task<IActionResult> CreateAddress([FromBody] AddressForCreationDto address)
         {
             if (address == null)
             {
@@ -46,15 +51,16 @@ namespace API.Controllers
             {
                 return UnprocessableEntity(ModelState);
             }
-
-            _repository.Address.CreateAddress(address);
+            var addressEntity = _mapper.Map<Address>(address);
+            _repository.Address.CreateAddress(addressEntity);
             await _repository.SaveAsync();
-            return NoContent();
 
+            var addressToReturn = _mapper.Map<AddressDto>(addressEntity);
+            return CreatedAtRoute(new { id = addressToReturn.Id }, addressToReturn);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAddress(int id, [FromBody] Address address)
+        public async Task<IActionResult> UpdateAddress(int id, [FromBody] AddressForUpdateDto address)
         {
             if (address == null)
             {
@@ -70,18 +76,11 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-            addressEntity.Country = address.Country;
-            addressEntity.City=address.City;
-            addressEntity.Street=address.Street;
-            addressEntity.Website=  address.Website;
-            addressEntity.Phone=    address.Phone;
-            addressEntity.Email= address.Email;
-            addressEntity.Fax= address.Fax;
 
+            _mapper.Map(address, addressEntity);
             await _repository.SaveAsync();
 
             return NoContent();
-
         }
 
         [HttpDelete("{id}")]

@@ -1,4 +1,6 @@
-﻿using Contracts.Interfaces;
+﻿using AutoMapper;
+using Contracts.Interfaces;
+using DataModel.Models.Dtos;
 using DataModel.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,15 +12,18 @@ namespace API.Controllers
     public class DepartmentsController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
-        public DepartmentsController(IRepositoryManager repository)
+        private readonly IMapper _mapper;
+        public DepartmentsController(IRepositoryManager repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllDepartments()
         {
             var departments = await _repository.Department.GetAllDepartmentsAsync(trackChanges: false);
-            return Ok(departments);
+            var departmentDtos = _mapper.Map<IEnumerable<DepartmentDto>>(departments); 
+            return Ok(departmentDtos);
 
         }
 
@@ -31,11 +36,12 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            return Ok(department);
+            var departmentDto = _mapper.Map<DepartmentDto>(department);
+            return Ok(departmentDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateDepartment([FromBody] Department department)
+        public async Task<IActionResult> CreateDepartment([FromBody] DepartmentForCreationDto department)
         {
             if (department == null)
             {
@@ -47,14 +53,16 @@ namespace API.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            _repository.Department.CreateDepartment(department);
+            var departmentEntity = _mapper.Map<Department>(department);
+            _repository.Department.CreateDepartment(departmentEntity);
             await _repository.SaveAsync();
-            return NoContent();
 
+            var departmentToReturn = _mapper.Map<DepartmentDto>(departmentEntity);
+            return CreatedAtRoute(new { id = departmentToReturn.Id }, departmentToReturn);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDepartment(int id, [FromBody] Department department)
+        public async Task<IActionResult> UpdateDepartment(int id, [FromBody] DepartmentForUpdateDto department)
         {
             if (department == null)
             {
@@ -71,9 +79,7 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            departmentEntity.Name = department.Name;
-            departmentEntity.Description = department.Description;
-            departmentEntity.CompanyId = department.CompanyId;
+            _mapper.Map(department, departmentEntity);
 
             await _repository.SaveAsync();
             return NoContent();

@@ -1,4 +1,6 @@
-﻿using Contracts.Interfaces;
+﻿using AutoMapper;
+using Contracts.Interfaces;
+using DataModel.Models.Dtos;
 using DataModel.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,15 +12,18 @@ namespace API.Controllers
     public class SalariesController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
-        public SalariesController(IRepositoryManager repository)
+        private readonly IMapper _mapper;
+        public SalariesController(IRepositoryManager repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllSalaries()
         {
             var salaries = await _repository.Salary.GetAllSalariesAsync(trackChanges: false);
-            return Ok(salaries);
+            var salaryDtos = _mapper.Map<IEnumerable<SalaryDto>>(salaries); 
+            return Ok(salaryDtos);
 
         }
 
@@ -30,12 +35,12 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-
-            return Ok(salary);
+            var salaryDto = _mapper.Map<SalaryDto>(salary);
+            return Ok(salaryDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSalary([FromBody] Salary salary)
+        public async Task<IActionResult> CreateSalary([FromBody] SalaryForCreationDto salary)
         {
             if (salary == null)
             {
@@ -47,14 +52,17 @@ namespace API.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            _repository.Salary.CreateSalary(salary);
+            var salaryEntity = _mapper.Map<Salary>(salary);
+            _repository.Salary.CreateSalary(salaryEntity);
             await _repository.SaveAsync();
-            return NoContent();
+
+            var salaryToReturn = _mapper.Map<SalaryDto>(salaryEntity);
+            return CreatedAtRoute(new { id = salaryToReturn.Id }, salaryToReturn);
 
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSalary(int id, [FromBody] Salary salary)
+        public async Task<IActionResult> UpdateSalary(int id, [FromBody] SalaryForUpdateDto salary)
         {
             if (salary == null)
             {
@@ -71,13 +79,7 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            salaryEntity.Grade = salary.Grade;
-            salaryEntity.Position = salary.Position;
-            salaryEntity.Growth = salary.Growth;
-            salaryEntity.Pension = salary.Pension;
-            salaryEntity.Tax = salary.Tax;
-            salaryEntity.Allowance = salary.Allowance;
-            salaryEntity.Net = salary.Net;
+            _mapper.Map(salary, salaryEntity);
 
             await _repository.SaveAsync();
             return NoContent();

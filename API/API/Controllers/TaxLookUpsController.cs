@@ -1,4 +1,6 @@
-﻿using Contracts.Interfaces;
+﻿using AutoMapper;
+using Contracts.Interfaces;
+using DataModel.Models.Dtos;
 using DataModel.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,15 +13,18 @@ namespace API.Controllers
     {
 
         private readonly IRepositoryManager _repository;
-        public TaxLookUpsController(IRepositoryManager repository)
+        private readonly IMapper _mapper;
+        public TaxLookUpsController(IRepositoryManager repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllTaxLookUps()
         {
             var taxLookUps = await _repository.TaxLookUp.GetAllTaxLookUpsAsync(trackChanges: false);
-            return Ok(taxLookUps);
+            var taxLookUpDtos = _mapper.Map<IEnumerable<TaxLookUpDto>>(taxLookUps); 
+            return Ok(taxLookUpDtos);
 
         }
 
@@ -31,12 +36,12 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-
-            return Ok(taxLookUp);
+            var taxLookUpDto = _mapper.Map<TaxLookUpDto>(taxLookUp);
+            return Ok(taxLookUpDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTaxLookUp([FromBody] TaxLookUp taxLookUp)
+        public async Task<IActionResult> CreateTaxLookUp([FromBody] TaxLookUpForCreationDto taxLookUp)
         {
             if (taxLookUp == null)
             {
@@ -48,14 +53,17 @@ namespace API.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            _repository.TaxLookUp.CreateTaxLookUp(taxLookUp);
+            var taxLookUpEntity = _mapper.Map<TaxLookUp>(taxLookUp);
+            _repository.TaxLookUp.CreateTaxLookUp(taxLookUpEntity);
             await _repository.SaveAsync();
-            return NoContent();
+
+            var taxLookUpToReturn = _mapper.Map<TaxLookUpDto>(taxLookUpEntity);
+            return CreatedAtRoute(new { id = taxLookUpToReturn.Id }, taxLookUpToReturn);
 
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTaxLookUp(int id, [FromBody] TaxLookUp taxLookUp)
+        public async Task<IActionResult> UpdateTaxLookUp(int id, [FromBody] TaxLookUpForUpdateDto taxLookUp)
         {
             if (taxLookUp == null)
             {
@@ -72,11 +80,7 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            taxLookUpEntity.Min = taxLookUp.Min;
-            taxLookUpEntity.Max = taxLookUp.Max;
-            taxLookUpEntity.Parsent = taxLookUp.Parsent;
-            taxLookUpEntity.PensionRate = taxLookUp.PensionRate;
-            taxLookUpEntity.Deduction = taxLookUp.Deduction;
+            _mapper.Map(taxLookUp, taxLookUpEntity);
 
             await _repository.SaveAsync();
             return NoContent();
