@@ -35,5 +35,10 @@ namespace Infrastracture.Repository
            await FindAll(trackChanges)
            .OrderBy(c => c.Min)
            .ToListAsync();
+
+        public async Task<TaxLookUp> GetTaxLookUpByGrowthAsync(double growth, bool trackChanges) =>
+         await FindByCondition(e =>( e.Min <= growth && e.Max>=growth), trackChanges)
+             .SingleOrDefaultAsync();
+
     }
 }

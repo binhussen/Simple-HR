@@ -53,6 +53,12 @@ namespace API.Controllers
             }
 
             var salaryEntity = _mapper.Map<Salary>(salary);
+
+            var taxLookUp = await _repository.TaxLookUp.GetTaxLookUpByGrowthAsync(salary.Growth,trackChanges: false);
+            salaryEntity.Pension = (salary.Growth / 100) * taxLookUp.PensionRate;
+            salaryEntity.Tax = ((salary.Growth / 100) * taxLookUp.Parsent) - taxLookUp.Deduction;
+            salaryEntity.Net = salary.Growth - salaryEntity.Pension - salaryEntity.Tax + salary.Allowance;
+
             _repository.Salary.CreateSalary(salaryEntity);
             await _repository.SaveAsync();
 
@@ -78,6 +84,10 @@ namespace API.Controllers
             {
                 return NotFound();
             }
+            var taxLookUp = await _repository.TaxLookUp.GetTaxLookUpByGrowthAsync(salary.Growth, trackChanges: false);
+            salaryEntity.Pension = (salary.Growth / 100) * taxLookUp.PensionRate;
+            salaryEntity.Tax = ((salary.Growth / 100) * taxLookUp.Parsent) - taxLookUp.Deduction;
+            salaryEntity.Net = salary.Growth - salaryEntity.Pension - salaryEntity.Tax + salary.Allowance;
 
             _mapper.Map(salary, salaryEntity);
 
