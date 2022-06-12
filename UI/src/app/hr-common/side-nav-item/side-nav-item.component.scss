@@ -1,0 +1,13 @@
+.sidenav-dropdown-indicator {
+  transition: transform .25s;
+
+  &.indicateOpen {
+    transform: rotate(180deg);
+  }
+}
+
+mat-nav-list {
+  overflow: hidden;
+  padding-top: 0;
+
+}

@@ -1,0 +1,30 @@
+<mat-sidenav-container>
+  <mat-sidenav [mode]="sideNavMode" #sidenav [opened]="sideNavOpened" style="overflow: hidden;">
+    <mat-toolbar>XOKA IT Solution</mat-toolbar>
+    <app-side-nav></app-side-nav>
+  </mat-sidenav>
+  <mat-sidenav-content style="flex-grow: 1; z-index: unset;overflow: hidden;">
+    <mat-drawer-container>
+      <mat-drawer mode="side" #drawerob [opened]="matDrawerOpened" style="overflow: hidden;" *ngIf="matDrawerOpened">
+        <app-side-nav></app-side-nav>
+      </mat-drawer>
+      <mat-drawer-content style="overflow: hidden; height: 100vh !important;">
+        <mat-toolbar>
+          <button mat-icon-button (click)="sidenav.toggle()" *ngIf="matDrawerShow">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <button mat-icon-button (click)="sidenav.toggle()" *ngIf="!matDrawerShow">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <span class="spacer"></span>
+          <app-user-menu [user]="user"></app-user-menu>
+        </mat-toolbar>
+        <perfect-scrollbar>
+          <main style="padding: 16px 24px;">
+            <ng-content></ng-content>
+          </main>
+        </perfect-scrollbar>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </mat-sidenav-content>
+</mat-sidenav-container>
