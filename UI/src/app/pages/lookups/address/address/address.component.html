@@ -1,0 +1,28 @@
+<ng-container>
+    <mat-toolbar class="mat-elevation-z1 table-header">
+        <div class="table-header-title">
+            <h1>address</h1>
+        </div>
+        <span class="spacer"></span>
+        <div class="table-header-actions">
+            <button mat-button color="primary" (click)="openForm('create')">
+                <mat-icon>add</mat-icon>
+                Create New
+            </button>
+        </div>
+    </mat-toolbar>
+    <div *ngIf="loading" style="display: flex; justify-content: center; padding: 24px">
+        <mat-progress-spinner strokeWidth="3" diameter="50" mode="indeterminate"></mat-progress-spinner>
+    </div>
+
+    <ng-template #noRecordTemplate>
+        <mat-card>
+            <mat-card-content>
+                <div class="no-record-found">
+                    <img src="assets/img/no-record.svg" alt="No Record Found">
+                    <h1>No Record Found!</h1>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </ng-template>
+</ng-container>

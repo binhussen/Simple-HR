@@ -1,5 +1,7 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CoreModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -17,6 +19,7 @@ import { HrCommonModule } from './hr-common/hr-common.module';
     BrowserAnimationsModule,
     CoreModule,
     HrCommonModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

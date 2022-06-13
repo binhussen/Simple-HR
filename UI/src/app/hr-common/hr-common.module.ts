@@ -22,9 +22,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 };
 
 @NgModule({
-  declarations: [SideNavComponent,SideNavItemComponent,UserMenuComponent,LayoutComponent],
+  declarations: [
+    SideNavComponent,
+    SideNavItemComponent,
+    UserMenuComponent,
+    LayoutComponent
+  ],
   imports: [
-  CommonModule,
+CommonModule,
     PerfectScrollbarModule,
     MatListModule,
     MatIconModule,
