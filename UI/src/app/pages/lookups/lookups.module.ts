@@ -18,13 +18,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CrudHttpService } from './services/crudHttp.service';
 import { SalariesComponent } from './salary/salaries/salaries.component';
 import { SalaryformComponent } from './salary/salaryform/salaryform.component';
+import { TaxLookupsComponent } from './tax-lookup/tax-lookups/tax-lookups.component';
+import { TaxformComponent } from './tax-lookup/taxform/taxform.component';
 
 @NgModule({
   declarations: [
     AddressComponent,
     AddressformComponent,
     SalariesComponent,
-    SalaryformComponent
+    SalaryformComponent,
+    TaxLookupsComponent,
+    TaxformComponent
   ],
   imports: [
     CommonModule,

@@ -6,32 +6,30 @@ import { filter } from 'rxjs';
 import formActions from 'src/app/store/actions/form.actions';
 import { AppState } from 'src/app/store/models/app.state';
 import { environment } from 'src/environments/environment';
-import { salary } from '../salary.mode';
-
+import { taxlookup } from '../tax-lookup.model';
 interface FormProps {
   title: string;
   actionTitle: string;
-  data: salary;
+  data: taxlookup;
   actionType: 'create' | 'edit';
 } 
 @Component({
-  selector: 'app-salaryform',
-  templateUrl: './salaryform.component.html',
-  styleUrls: ['./salaryform.component.scss']
+  selector: 'app-taxform',
+  templateUrl: './taxform.component.html',
+  styleUrls: ['./taxform.component.scss']
 })
-export class SalaryformComponent implements OnInit {
-
+export class TaxformComponent implements OnInit {
 
   title!: string;
   actionTitle = 'save';
   actionType!: 'create' | 'edit' | 'delete';
-  data!:salary;
-  sourceUrl= environment.apiURL+"salaries";
+  data!:taxlookup;
+  sourceUrl= environment.apiURL+"taxlookups";
 
   
   form!: FormGroup;
 
-  constructor(public dialogRef: MatDialogRef<SalaryformComponent>,
+  constructor(public dialogRef: MatDialogRef<TaxformComponent>,
     @Inject(MAT_DIALOG_DATA) public inputData: FormProps,
     private formBuilder: FormBuilder,
     private store$: Store<AppState>) { }
@@ -43,10 +41,11 @@ export class SalaryformComponent implements OnInit {
     this.data = data;
     this.actionType = actionType;
     this.form = this.formBuilder.group({
-      grade: new FormControl(this.data?this.data.grade:'', [Validators.required]),
-      position: new FormControl(this.data?this.data.position:'', [Validators.required]),
-      growth: new FormControl(this.data?this.data.growth:'', [Validators.required]),
-      allowance: new FormControl(this.data?this.data.allowance:'', [Validators.required])
+      min: new FormControl(this.data?this.data.min:'', [Validators.required]),
+      max: new FormControl(this.data?this.data.max:'', [Validators.required]),
+      parsent: new FormControl(this.data?this.data.parsent:'', [Validators.required]),
+      pensionRate: new FormControl(this.data?this.data.pensionRate:'', [Validators.required]),
+      deduction: new FormControl(this.data?this.data.deduction:'', [Validators.required])
     });
   }
 
@@ -76,3 +75,4 @@ export class SalaryformComponent implements OnInit {
   }
 
 }
+

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 import { createAddress } from '../../address/address.model';
 import { CrudHttpService } from '../../services/crudHttp.service';
-import { createSalary, salary } from '../salary.mode';
+import { salary } from '../salary.mode';
 import { SalaryformComponent } from '../salaryform/salaryform.component';
 
 @Component({

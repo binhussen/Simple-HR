@@ -8,17 +8,3 @@ export interface salary{
     allowance:number;
     net:number;
 }
-
-export interface createSalary{
-    grade:string;
-    position:string;
-    growth:number;
-    allowance:number;
-}
-
-export interface updateSalary{
-    grade:string;
-    position:string;
-    growth:number;
-    allowance:number;
-}
