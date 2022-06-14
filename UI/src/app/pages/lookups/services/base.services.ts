@@ -21,8 +21,9 @@ export abstract class BaseService<T> {
       .pipe(retry(3));
   }
 
-  findOne(id: string): Observable<T> {
-    return this.httpClient.get<T>(`${this._path}/${id}`).pipe(retry(3));
+  findOne(
+    customPath?: string,id?: string): Observable<T> {
+    return this.httpClient.get<T>(customPath ??`${this._path}/${id}`).pipe(retry(3));
   }
 
   createOne(item: Omit<T, 'id'>, customPath?: string): Observable<T> {
@@ -39,13 +40,13 @@ export abstract class BaseService<T> {
     id?: string
   ): Observable<T> {
     return this.httpClient
-      .patch<T>(customPath ?? `${this._path}/${id}`, item)
+      .put<T>(customPath ?? `${this._path}/${id}`, item)
       .pipe(retry(3));
   }
 
-  deleteOne(id: string, customPath?: string): Observable<boolean> {
+  deleteOne(customPath?: string,id?: string, ): Observable<boolean> {
     return this.httpClient
-      .delete<boolean>(`${customPath ?? this._path}/${id}`)
+      .delete<boolean>(`${customPath} ?? ${this._path}/${id}`)
       .pipe(retry(3));
   }
 }

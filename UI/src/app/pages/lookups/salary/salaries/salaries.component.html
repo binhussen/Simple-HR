@@ -1,0 +1,75 @@
+<mat-toolbar class="mat-elevation-z1 table-header">
+    <div class="table-header-title">
+        <h1>Salary</h1>
+    </div>
+    <span class="spacer"></span>
+    <div class="table-header-actions">
+        <button mat-button color="primary" (click)="openForm('create','Create Address')">
+            <mat-icon>add</mat-icon>
+            Create New
+        </button>
+    </div>
+</mat-toolbar>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Position Column -->
+    <ng-container matColumnDef="No">
+        <th mat-header-cell *matHeaderCellDef> No</th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Position">
+        <th mat-header-cell *matHeaderCellDef> Position </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Grade">
+        <th mat-header-cell *matHeaderCellDef> Grade </th>
+        <td mat-cell *matCellDef="let element"> {{element.grade}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Growth">
+        <th mat-header-cell *matHeaderCellDef> Growth </th>
+        <td mat-cell *matCellDef="let element"> {{element.growth}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Pension">
+        <th mat-header-cell *matHeaderCellDef> Pension. </th>
+        <td mat-cell *matCellDef="let element"> {{element.pension}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Tax">
+        <th mat-header-cell *matHeaderCellDef> Tax </th>
+        <td mat-cell *matCellDef="let element"> {{element.tax}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Allowance">
+        <th mat-header-cell *matHeaderCellDef> Allowance </th>
+        <td mat-cell *matCellDef="let element"> {{element.allowance}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Net">
+        <th mat-header-cell *matHeaderCellDef> Net </th>
+        <td mat-cell *matCellDef="let element"> {{element.net}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" [matMenuTriggerFor]="menu">
+                <mat-icon>more_horiz</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item (click)="editSalary(element.id)">
+                    <mat-icon>edit</mat-icon>Edit
+                </button>
+                <button mat-menu-item (click)="deleteSalary(element.id)">
+                    <mat-icon>delete</mat-icon> Delete
+                </button>
+            </mat-menu>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

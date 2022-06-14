@@ -33,12 +33,12 @@ export const menus: Array<Menu> = [
     sub: [
       {
         name: 'Salary',
-        link: 'weapon/notifies',
+        link: 'lookups/salaries',
         open: false,
       },
       {
         name: 'Address',
-        link: 'weapon/inventories',
+        link: 'lookups/address',
         open: false,
       },
       {

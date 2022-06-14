@@ -16,11 +16,15 @@ import { AddressComponent } from './address/address/address.component';
 import { AddressformComponent } from './address/addressform/addressform.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CrudHttpService } from './services/crudHttp.service';
+import { SalariesComponent } from './salary/salaries/salaries.component';
+import { SalaryformComponent } from './salary/salaryform/salaryform.component';
 
 @NgModule({
   declarations: [
     AddressComponent,
-    AddressformComponent
+    AddressformComponent,
+    SalariesComponent,
+    SalaryformComponent
   ],
   imports: [
     CommonModule,

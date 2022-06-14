@@ -9,5 +9,5 @@ export interface FormInfo {
     status: 'PENDING' | 'FAILED' | 'SUCCESS' | null;
     submittedToUrl: string | null;
     data: any;
-    action: 'create' | 'edit';
+    action: 'create' | 'edit' | 'delete';
   }

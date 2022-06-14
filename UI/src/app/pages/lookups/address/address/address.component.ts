@@ -10,6 +10,39 @@ export interface Action {
   name: string;
   type:'edit' | 'delete';
 }
+const data:address[]=
+  [
+    {
+      "id": 4,
+      "country": "string",
+      "city": "string",
+      "street": "string",
+      "website": "string",
+      "phone": "string",
+      "email": "string",
+      "fax": "string"
+    },
+    {
+      "id": 5,
+      "country": "string",
+      "city": "string",
+      "street": "string",
+      "website": "string",
+      "phone": "string",
+      "email": "string",
+      "fax": "string"
+    },
+    {
+      "id": 6,
+      "country": "string",
+      "city": "string",
+      "street": "string",
+      "website": "string",
+      "phone": "string",
+      "email": "string",
+      "fax": "string"
+    }
+  ];
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
@@ -17,7 +50,7 @@ export interface Action {
 })
 export class AddressComponent implements OnInit {
   sourceUrl= environment.apiURL+"addresses";
-  dataSource = new MatTableDataSource();
+  dataSource = data;
 
   displayedColumns!:[
     'No',
@@ -53,8 +86,8 @@ export class AddressComponent implements OnInit {
 
   async loadData() {
     await this.crudService.findAll(this.sourceUrl).subscribe((response:address[]) => {
-    this.dataSource = new MatTableDataSource(response);
-    console.log(this.dataSource.data);
+    // this.dataSource = new MatTableDataSource(response);
+    // console.log(this.dataSource.data);
     });
   }
 }

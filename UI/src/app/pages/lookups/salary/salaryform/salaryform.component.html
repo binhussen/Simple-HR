@@ -1,0 +1,59 @@
+<mat-toolbar class="mat-toolbar-custom">
+    <h3 class="title">{{title}}</h3>
+</mat-toolbar>
+<mat-dialog-content>
+    <!--  -->
+    <ng-template #formInputTemplate let-form="form" let-elements="elements">
+        <div fxLayout="row wrap" style="justify-content: space-between" fxLayout.lt-sm="column" fxLayoutGap.lt-sm="0"
+            [formGroup]="form">
+            <!-- grade -->
+            <mat-form-field [appearance]="'outline'">
+                <mat-label>Grade</mat-label>
+                <input matInput type="text" formControlName="grade" placeholder="" value="" size="4" />
+                <mat-error>
+                    <!-- {{errors && errors[element.name]}} -->
+                </mat-error>
+            </mat-form-field>
+            <!-- position -->
+            <mat-form-field [appearance]="'outline'">
+                <mat-label>Position</mat-label>
+                <input matInput type="text" formControlName="position" placeholder="" value="" size="4" />
+                <mat-error>
+                    <!-- {{errors && errors[element.name]}} -->
+                </mat-error>
+            </mat-form-field>
+            <!-- growth -->
+            <mat-form-field [appearance]="'outline'">
+                <mat-label>Growth</mat-label>
+                <input matInput type="number" formControlName="growth" placeholder="" value="" size="4" />
+                <mat-error>
+                    <!-- {{errors && errors[element.name]}} -->
+                </mat-error>
+            </mat-form-field>
+            <!-- allowance -->
+            <mat-form-field [appearance]="'outline'">
+                <mat-label>Allowance</mat-label>
+                <input matInput type="number" formControlName="allowance" placeholder="" value="" size="4" />
+                <mat-error>
+                    <!-- {{errors && errors[element.name]}} -->
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </ng-template>
+
+    <form action="#" novalidate>
+        <ng-container *ngTemplateOutlet="formInputTemplate;context:{ form: form}">
+        </ng-container>
+    </form>
+    <!--  -->
+</mat-dialog-content>
+<mat-dialog-actions class="actions">
+    <button mat-button type="submit" [disabled]="form.invalid" (click)="submit()">
+        <mat-icon>save</mat-icon>
+        {{actionTitle}}
+    </button>
+    <button mat-button type="button" mat-dialog-close tabindex="1">
+        <mat-icon>close</mat-icon>
+        Cancel
+    </button>
+</mat-dialog-actions>
