@@ -7,7 +7,12 @@ import { TaxLookupsComponent } from './tax-lookup/tax-lookups/tax-lookups.compon
 const routes: Routes = [
   {path: 'address', component: AddressComponent},
   {path: 'salaries', component: SalariesComponent},
-  {path: 'taxlookups', component: TaxLookupsComponent}
+  {path: 'taxlookups', component: TaxLookupsComponent},
+  {
+    path: '',
+    redirectTo: 'address',
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({

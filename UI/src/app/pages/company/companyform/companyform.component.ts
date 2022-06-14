@@ -1,59 +1,65 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
+import { CrudHttpService } from 'src/app/services/crudHttp.service';
 import formActions from 'src/app/store/actions/form.actions';
 import { AppState } from 'src/app/store/models/app.state';
 import { environment } from 'src/environments/environment';
+import { address } from '../../lookups/address/address.model';
+import { company } from '../company.model';
 
 interface FormProps {
   title: string;
   actionTitle: string;
-  data: string;
+  data: company;
   actionType: 'create' | 'edit';
 }
 
 @Component({
-  selector: 'app-addressform',
-  templateUrl: './addressform.component.html',
-  styleUrls: ['./addressform.component.scss']
+  selector: 'app-companyform',
+  templateUrl: './companyform.component.html',
+  styleUrls: ['./companyform.component.scss']
 })
-export class AddressformComponent implements OnInit {
+export class CompanyformComponent implements OnInit {
+
+  addresses:address[];
 
   title!: string;
   actionTitle = 'save';
   actionType!: 'create' | 'edit';
-  data!:string;
-  sourceUrl= environment.apiURL+"addresses";
+  data!:company;
+  sourceUrl= environment.apiURL+"companies";
 
   
   form!: FormGroup;
 
-  constructor(public dialogRef: MatDialogRef<AddressformComponent>,
+  constructor(public dialogRef: MatDialogRef<CompanyformComponent>,
     @Inject(MAT_DIALOG_DATA) public inputData: FormProps,
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,private crudService: CrudHttpService,
     private store$: Store<AppState>) { }
 
   ngOnInit(): void {
+    
+    this.getAddress();
     const {title, actionTitle, data, actionType } = this.inputData;
     this.title = title;
     this.actionTitle = actionTitle;
     this.data = data;
     this.actionType = actionType;
-
     this.form = this.formBuilder.group({
-      country: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required]),
-      street: new FormControl('', [Validators.required]),
-      website: new FormControl('', Validators.required),
-      phone: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      fax: new FormControl('', [Validators.required]),
+      name: new FormControl(this.data?this.data.name:'', [Validators.required]),
+      type: new FormControl(this.data?this.data.type:'', [Validators.required]),
+      addressId: new FormControl(this.data?this.data.addressId:'', [Validators.required])
     });
   }
 
   submit() {
+    if(this.actionType=='edit'){
+      this.sourceUrl= `${this.sourceUrl}/${this.data.id}`;
+      console.log(this.sourceUrl);
+    }
     const formState = {
       value: {
         id: this.title,
@@ -74,4 +80,8 @@ export class AddressformComponent implements OnInit {
       });
   }
 
+  getAddress(){
+    this.crudService.findAll(environment.apiURL+"addresses").subscribe((response:address[]) => {
+     this.addresses= response;
+  })};
 }

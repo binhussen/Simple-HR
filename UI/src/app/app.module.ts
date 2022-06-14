@@ -15,7 +15,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import {metaReducers, reducers} from "./store/reducers";
 import { FormEffect } from './store/effects/form.effect';
-import { CrudHttpService } from './store/crudHttp.service';
+import { CrudHttpService } from './services/crudHttp.service';
 
 @NgModule({
   declarations: [

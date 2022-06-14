@@ -15,7 +15,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import { AddressComponent } from './address/address/address.component';
 import { AddressformComponent } from './address/addressform/addressform.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CrudHttpService } from './services/crudHttp.service';
+import { CrudHttpService } from '../../services/crudHttp.service';
 import { SalariesComponent } from './salary/salaries/salaries.component';
 import { SalaryformComponent } from './salary/salaryform/salaryform.component';
 import { TaxLookupsComponent } from './tax-lookup/tax-lookups/tax-lookups.component';
@@ -33,18 +33,18 @@ import { TaxformComponent } from './tax-lookup/taxform/taxform.component';
   imports: [
     CommonModule,
     MatCardModule,
+    LookupsRoutingModule,
+    MatCardModule,
     MatIconModule,
     MatToolbarModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    LookupsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     MatTableModule,
     MatMenuModule
   ],
-  providers:[CrudHttpService]
 })
 export class LookupsModule { }

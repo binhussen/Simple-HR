@@ -3,13 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'lookups',
-    loadChildren: () => import('./pages/lookups/lookups.module').then(m => m.LookupsModule)
-  },
-  {
     path: '',
-    redirectTo: 'lookups',
-    pathMatch: 'full'
+    loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
   }
 ];
 
