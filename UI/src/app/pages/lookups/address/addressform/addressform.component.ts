@@ -1,6 +1,10 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { filter } from 'rxjs';
+import formActions from 'src/app/store/actions/form.actions';
+import { AppState } from 'src/app/store/models/app.state';
 import { environment } from 'src/environments/environment';
 import { CrudHttpService } from '../../services/crudHttp.service';
 
@@ -8,7 +12,7 @@ interface FormProps {
   title: string;
   actionTitle: string;
   data: string;
-  actionType: 'create' | 'update';
+  actionType: 'create' | 'edit';
 }
 
 @Component({
@@ -20,7 +24,7 @@ export class AddressformComponent implements OnInit {
 
   title!: string;
   actionTitle = 'save';
-  actionType!: string;
+  actionType!: 'create' | 'edit';
   data!:string;
   sourceUrl= environment.apiURL+"addresses";
 
@@ -30,7 +34,7 @@ export class AddressformComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<AddressformComponent>,
     @Inject(MAT_DIALOG_DATA) public inputData: FormProps,
     private formBuilder: FormBuilder,
-    private crudService: CrudHttpService) { }
+    private store$: Store<AppState>) { }
 
   ngOnInit(): void {
     const {title, actionTitle, data, actionType } = this.inputData;
@@ -51,23 +55,24 @@ export class AddressformComponent implements OnInit {
   }
 
   submit() {
-    if (this.actionType === 'create') {
-      this.crudService.createOne(this.form.value, this.sourceUrl).subscribe((r) => {
-        this.dialogRef.close({
-          message: 'Successfully created!',
-          success: true,
-        });
+    const formState = {
+      value: {
+        id: this.title,
+        data: this.form.value,
+        submittedToUrl: this.sourceUrl,
+        action: this.actionType,
+      },
+    };
+    this.store$.dispatch(formActions.setSubmittingForm(formState));
+  
+    this.store$
+      .select((state) => state.form)
+      .pipe(filter((formState) => formState.id === this.title))
+      .subscribe((formState) => {
+        if (formState.status !== 'PENDING') {
+            this.dialogRef.close();
+        }
       });
-    }
-
-    if (this.actionType === 'edit') {
-      this.crudService.updateOne(this.form.value, this.sourceUrl).subscribe((r) => {
-        this.dialogRef.close({
-          message: 'Successfully Updated!',
-          success: true,
-        });
-      });
-    }
   }
 
 }

@@ -9,6 +9,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatTableModule} from '@angular/material/table';
+import {MatMenuModule} from '@angular/material/menu';
 
 import { AddressComponent } from './address/address/address.component';
 import { AddressformComponent } from './address/addressform/addressform.component';
@@ -31,7 +33,9 @@ import { CrudHttpService } from './services/crudHttp.service';
     MatProgressSpinnerModule,
     LookupsRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule,
+    MatMenuModule
   ],
   providers:[CrudHttpService]
 })
