@@ -1,0 +1,14 @@
+.spacer {
+    width: 100%;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-cell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-wrap: break-word;
+}

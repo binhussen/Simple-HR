@@ -1,0 +1,69 @@
+.mat-toolbar-custom {
+    display: flex;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.title {
+    flex-grow: 1;
+}
+
+.close-button {
+    position: relative;
+    top: -32px;
+    right: -32px;
+    z-index: 99999999999999;
+    justify-self: flex-end;
+}
+
+.close-button:hover {
+    background-color: #102846;
+    color: white;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+//form
+.mat-form-field {
+    width: 100%;
+}
+
+.misc-bottom-padding {
+    margin: 8px 0 20px;
+}
+
+.misc-bottom-padding mat-label {
+    margin-right: 15px;
+}
+
+.mat-radio-label {
+    margin: 0 15px 0 0;
+}
+
+.title-center {
+    margin: 0 auto;
+}
+
+.button-wrapper {
+    margin-top: 10px;
+}
+
+.mat-radio-button {
+    margin: 0 8px;
+}
+
+.hidden-input {
+    display: none;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0;
+}
+
+.inner-fieldset {
+    border-color: rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+}

@@ -17,9 +17,11 @@ import {MatTableModule} from '@angular/material/table';
 import {MatMenuModule} from '@angular/material/menu';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
+import { DepartmentsComponent } from './department/departments/departments.component';
+import { DepartmentformComponent } from './department/departmentform/departmentform.component';
 
 @NgModule({
-  declarations: [CompanyformComponent,CompaniesComponent],
+  declarations: [CompanyformComponent,CompaniesComponent, DepartmentsComponent, DepartmentformComponent],
   imports: [
     CommonModule,
     LookupsModule,
