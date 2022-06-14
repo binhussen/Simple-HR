@@ -9,6 +9,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HrCommonModule } from './hr-common/hr-common.module';
 
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import {metaReducers, reducers} from "./store/reducers";
+import { FormEffect } from './store/effects/form.effect';
+import { CrudHttpService } from './store/crudHttp.service';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -19,9 +27,14 @@ import { HrCommonModule } from './hr-common/hr-common.module';
     BrowserAnimationsModule,
     CoreModule,
     HrCommonModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers
+    }),
+    EffectsModule.forRoot([FormEffect]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
-  providers: [],
+  providers: [CrudHttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
