@@ -1,0 +1,101 @@
+<mat-toolbar class="mat-toolbar-custom">
+    <h3 class="title">{{title}}</h3>
+</mat-toolbar>
+<mat-dialog-content>
+    <!--  -->
+    <ng-template #formInputTemplate let-form="form" let-elements="elements">
+        <div fxLayout="row wrap" style="justify-content: space-between" fxLayout.lt-sm="column" fxLayoutGap.lt-sm="0"
+            [formGroup]="form">
+
+            <mat-form-field [appearance]="'outline'">
+                <mat-label>First Name</mat-label>
+                <input matInput type="text" formControlName="firstName" placeholder="" value="" size="4" />
+                <mat-error>
+                    <!-- {{errors && errors[element.name]}} -->
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field [appearance]="'outline'">
+                <mat-label>Last Name</mat-label>
+                <input matInput type="text" formControlName="lastName" placeholder="" value="" size=" 4" />
+                <mat-error>
+                    <!-- {{errors && errors[element.name]}} -->
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field [appearance]="'outline'">
+                <mat-label>Gander</mat-label>
+                <input matInput type="text" formControlName="gander" placeholder="" value="" size="4" />
+                <mat-error>
+                    <!-- {{errors && errors[element.name]}} -->
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field [appearance]="'outline'">
+                <mat-label>Birth date</mat-label>
+                <input matInput type="date" formControlName="birthDate" placeholder="" value="" size=" 4" />
+                <mat-error>
+                    <!-- {{errors && errors[element.name]}} -->
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field [appearance]="'outline'">
+                <mat-label>Hire Date</mat-label>
+                <input matInput type="date" formControlName="hireDate" placeholder="" value="" size="4" />
+                <mat-error>
+                    <!-- {{errors && errors[element.name]}} -->
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field [appearance]="'outline'">
+                <mat-label>Status</mat-label>
+                <input matInput type="text" formControlName="status" placeholder="" value="" size="4" />
+                <mat-error>
+                    <!-- {{errors && errors[element.name]}} -->
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field [appearance]="'outline'">
+                <mat-label>Phone</mat-label>
+                <input matInput type="text" formControlName="phone" placeholder="" value="" size="4" />
+                <mat-error>
+                    <!-- {{errors && errors[element.name]}} -->
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field [appearance]="'outline'">
+                <mat-label>Email</mat-label>
+                <input matInput type="text" formControlName="email" placeholder="" value="" size="4" />
+                <mat-error>
+                    <!-- {{errors && errors[element.name]}} -->
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Salary</mat-label>
+                <mat-select formControlName="salaryId">
+                    <mat-option *ngFor="let salary of salaries" [value]="salary.id">
+                        {{salary.growth}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Department</mat-label>
+                <mat-select formControlName="departmentId">
+                    <mat-option *ngFor="let department of departments" [value]="department.id">
+                        {{department.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </ng-template>
+
+    <form action="#" novalidate>
+        <ng-container *ngTemplateOutlet="formInputTemplate;context:{ form: form}">
+        </ng-container>
+    </form>
+    <!--  -->
+</mat-dialog-content>
+<mat-dialog-actions class="actions">
+    <button mat-button type="submit" [disabled]="form.invalid" (click)="submit()">
+        <mat-icon>save</mat-icon>
+        {{actionTitle}}
+    </button>
+    <button mat-button type="button" mat-dialog-close tabindex="1">
+        <mat-icon>close</mat-icon>
+        Cancel
+    </button>
+</mat-dialog-actions>
