@@ -16,48 +16,36 @@ To get a local copy up and running follow these simple example steps.
 ## Development Setup
 
 ### Prerequisites
-#### Angular
+> Angular
 
 - Install [Node.js](https://nodejs.org/en/download/) which includes [Node Package Manager](https://www.npmjs.com/)
+> .NetCore
+- Install [Visual Studio 2017 or higher] (https://visualstudio.microsoft.com/downloads/)
+- Install [.NET Core SDK 2.1.x ](https://dotnet.microsoft.com/en-us/download)
+- Install [MS SQL Server] (https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 
 ### Setting Up a Project
+> Angular
 
-Install the Angular CLI globally:
+* Install the Angular CLI globally:
 
 ```
 npm install -g @angular/cli
 ```
-Run the application:
+ * Run the application:
 
 ```
 cd [PROJECT NAME]
 ng serve
 ```
+> .Netcore
+
+* Open solution in Visual Studio
+* Set project as Startup Project and build the project.
+* Run the application.
 
 Angular is cross-platform, fast, scalable, has incredible tooling, and is loved by millions.
 
-## Getting Started
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-- Visual Studio 2017 or higher 
-- .NET Core SDK 2.1.x 
-- Entity Framework Core 2.1
-- Npgsql.EntityFrameworkCore.PostgreSQL 2.1.1.1 (https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/)
-
-### Installing
-1. Download and copy to \My Documents\Visual Studio 2017\Templates\ProjectTemplates folder.
-## Prerequirements
-
-* Visual Studio 2017
-* .NET Core SDK
-* SQL Server
-
-## How To Run
-
-* Open solution in Visual Studio 2017
-* Set .Web project as Startup Project and build the project.
-* Run the application.
 ## Authors
 
 👤 Mohammed Hussen (binhussen)
