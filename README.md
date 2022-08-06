@@ -13,17 +13,38 @@ Simple HR is a basic website that allows users to aManage employees along with t
 
 To get a local copy up and running follow these simple example steps.
 
+## Development Setup
+
 ### Prerequisites
+> Angular
 
-- Browser
-- A version control like git
-- A text editor
-- install node.js and install angular cli
-- run ng serve command
+- Install [Node.js](https://nodejs.org/en/download/) which includes [Node Package Manager](https://www.npmjs.com/)
+> .NetCore
+- Install [Visual Studio 2017 or higher] (https://visualstudio.microsoft.com/downloads/)
+- Install [.NET Core SDK 2.1.x ](https://dotnet.microsoft.com/en-us/download)
+- Install [MS SQL Server] (https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 
-### Setup
+### Setting Up a Project
+> Angular
 
-- First clone or download using the link [https://github.com/binhussen/Simple-HR](https://github.com/binhussen/Simple-HR).
+* Install the Angular CLI globally:
+
+```
+npm install -g @angular/cli
+```
+ * Run the application:
+
+```
+cd [PROJECT NAME]
+ng serve
+```
+> .Netcore
+
+* Open solution in Visual Studio
+* Set project as Startup Project and build the project.
+* Run the application.
+
+Angular is cross-platform, fast, scalable, has incredible tooling, and is loved by millions.
 
 ## Authors
 
